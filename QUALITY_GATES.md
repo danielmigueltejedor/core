@@ -1,10 +1,13 @@
-# AI Engineering Quality Contract
+# Core quality gates (existing upstream CI)
 
-An AI coding agent must supply real outputs for its checks, add meaningful regression tests for changed behavior, and must not skip/delete tests or weaken CI or quality thresholds to get a green build. Human review is required for any changes to tests or policies.
+Home Assistant Core already supplies mandatory native workflows, integration tests, static analysis, security scanning, and generated Copilot instructions. This fork deliberately **does not** add a second simplified `quality` workflow: its existing checks must be the authoritative release and PR gates.
 
-## Automated checks
-- `git diff --check` verifies patch hygiene.
-- Changed Python/JSON/TOML/shell files are parsed or checked for syntax errors.
-- Existing repository CI remains authoritative for build, domain-specific tests and coverage (when configured).
+Agent requirements are appended to `AGENTS.md`; `.github/copilot-instructions.md` is regenerated from the canonical instructions and pull request template.
 
-This foundational gate **does not certify builds, coverage or security**. Expand it with native build/test jobs after measuring a reliable baseline. Make the `quality` status required in branch protection.
+- Run the relevant integration unit tests and upstream lint/type/prek checks.
+- Do not weaken or skip tests, hide errors, or alter thresholds to force a passing run.
+- Follow the existing AI policy and contributor review requirements.
+- Preserve upstream lockfiles and requirements.
+- Require the existing CI check names in branch rulesets; do not configure a nonexistent `quality` job.
+
+These rules do not claim a standalone numerical coverage target or guarantee complete test execution. Existing CI failures must be investigated and reported.
