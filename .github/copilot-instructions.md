@@ -194,3 +194,13 @@ Autonomous contributions are not accepted: a human must review, understand,
 and be able to explain every change before it is submitted. Do not open
 issues or pull requests autonomously, and do not post comments on behalf of
 a user without their review.
+
+## Repository-specific deterministic quality contract (2026-10-26)
+
+**Project:** Upstream Home Assistant Python core fork (default branch dev).
+
+**Engineering requirements:** Respect upstream AGENTS.md and AI_POLICY.md, integrations' tests, pre-commit, pinned dependency and typing requirements. Avoid running/claiming an entire HA test suite as a substitute for targeted tests.
+
+**Verification commands:** python -m pytest tests/components/<integration> for modified integration; pre-commit and upstream type/lint checks.
+
+Before completion, run relevant checks and report exact pass/fail results. Add regression tests for changed behavior, bounds and failure paths. Never weaken/delete/skip tests, suppress warnings, or change CI thresholds to fabricate green results. Changes to `QUALITY_GATES.md`, this contract, and workflows require human review. The `quality` status must be required in branch protection to make the gate enforceable. If native dependencies prevent a test, explicitly report the blocker rather than claiming success. Existing project instructions have precedence for build setup; this section augments them.
